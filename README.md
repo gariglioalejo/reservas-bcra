@@ -2,7 +2,9 @@
 
 Sitio estático que muestra, en tiempo real, las **Reservas Internacionales del Banco Central de la República Argentina** consultando la **API oficial del BCRA (v4.0)** directamente desde el navegador.
 
-![Estado](https://img.shields.io/badge/API-bcra.gob.ar%2Festadisticas%2Fv4.0-3f7bff)
+**Sitio publicado:** https://gariglioalejo.github.io/reservas-bcra/ · **Repositorio:** https://github.com/gariglioalejo/reservas-bcra
+
+> Este sitio solicita a los buscadores que **no lo indexen** (`robots.txt` + meta `noindex`), porque no es un sitio oficial.
 
 ## Qué muestra
 
@@ -28,11 +30,13 @@ Como la API habilita CORS, el sitio es 100 % estático: no necesita backend ni f
 ## Estructura
 
 ```
-index.html                     # estructura y textos
+index.html                     # estructura y textos (incluye meta noindex)
 styles.css                     # estilos (tema oscuro, responsive)
 app.js                         # consulta a la API, gráficos SVG y tabla
 data.json                      # snapshot de respaldo (si la API no responde)
+robots.txt                     # pide a los buscadores que no indexen el sitio
 scripts/update_data.py         # regenera data.json desde la API
+scripts/deploy_github.py       # publica en GitHub vía API REST (sin git/gh)
 .github/workflows/update-data.yml  # snapshot automático dos veces por día
 .nojekyll                      # evita el procesado Jekyll en GitHub Pages
 ```
@@ -53,6 +57,21 @@ python3 scripts/update_data.py
 ## Publicación
 
 El sitio se publica con **GitHub Pages** desde la rama `main` (raíz del repositorio). Cualquier push a `main` actualiza el sitio automáticamente.
+
+Para volver a desplegar sin `git` instalado:
+
+```bash
+GITHUB_TOKEN=<token> python3 scripts/deploy_github.py reservas-bcra
+```
+
+## No indexación
+
+El sitio **no debe aparecer en buscadores**. Se aplican dos capas:
+
+1. `robots.txt` con `Disallow: /` para todos los agentes (Googlebot, Bingbot, etc.).
+2. `<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">` (y equivalentes para `googlebot` y `bingbot`) en `index.html`.
+
+Como es un *project site* (`usuario.github.io/repo/`), el `robots.txt` no está en la raíz del dominio, así que la metaetiqueta `noindex` es el mecanismo efectivo; el `robots.txt` queda como refuerzo y cobra plena vigencia si se usa un dominio propio.
 
 ## Descargo de responsabilidad
 
