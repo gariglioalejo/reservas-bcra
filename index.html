@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reservas BCRA · Reservas Internacionales del Banco Central de Argentina</title>
+  <meta name="description" content="Consulta en vivo las reservas internacionales del Banco Central de la República Argentina (BCRA) usando su API oficial v4.0." />
+  <!-- Sitio no indexable: se pide explícitamente a los buscadores que no lo rastreen ni lo indexen -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+  <meta name="bingbot" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="preconnect" href="https://api.bcra.gob.ar" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🏦&lt;/text&gt;&lt;/svg&gt;" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark">BCRA</span>
+      <div class="brand-text">
+        <strong data-i18n="pageTitle">Reservas Internacionales</strong>
+        <span data-i18n="pageSubtitle">Banco Central de la República Argentina</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="status" id="status" data-state="loading">
+        <span class="dot"></span>
+        <span id="statusText" data-i18n="connecting">Conectando…</span>
+      </span>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma / Switch language">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero card">
+      <div class="hero-main">
+        <p class="label" data-i18n="reservesLabel">Reservas Internacionales del BCRA</p>
+        <div class="value-row">
+          <span class="currency">US$</span>
+          <span class="value" id="reservesValue" aria-live="polite">—</span>
+          <span class="unit" data-i18n="unitMillions">millones</span>
+        </div>
+        <p class="value-alt" id="reservesAlt">—</p>
+        <div class="meta-row">
+          <span class="chip" id="dateChip" data-i18n="noData">Sin datos</span>
+          <span class="chip delta" id="deltaChip" hidden></span>
+        </div>
+      </div>
+      <div class="spark" id="sparkWrap" aria-hidden="true"></div>
+    </section>
+
+    <section class="grid">
+      <article class="card stat">
+        <p class="label" data-i18n="prevValue">Valor anterior</p>
+        <p class="stat-value" id="prevValue">—</p>
+        <p class="stat-sub" id="prevDate">—</p>
+      </article>
+      <article class="card stat">
+        <p class="label" data-i18n="change30">Variación (30 días)</p>
+        <p class="stat-value" id="change30">—</p>
+        <p class="stat-sub" id="change30Pct">—</p>
+      </article>
+      <article class="card stat">
+        <p class="label" data-i18n="windowRange">Rango del período</p>
+        <p class="stat-value" id="rangeValue">—</p>
+        <p class="stat-sub" id="rangeLabel" data-i18n="last30">Últimos 30 registros</p>
+      </article>
+      <article class="card stat">
+        <p class="label" data-i18n="updated">Última consulta</p>
+        <p class="stat-value small" id="updatedAt">—</p>
+        <p class="stat-sub" data-i18n="autoRefresh">Se actualiza cada 60 s</p>
+      </article>
+    </section>
+
+    <section class="card chart-card">
+      <div class="card-head">
+        <h2 data-i18n="chartTitle">Evolución de las reservas</h2>
+        <span class="muted" id="chartCaption" data-i18n="chartCaptionDefault">Últimos 30 registros</span>
+      </div>
+      <div class="chart" id="chart"></div>
+      <div class="chart-axis muted" id="chartAxis"></div>
+    </section>
+
+    <section class="card table-card">
+      <div class="card-head">
+        <h2 data-i18n="recentTitle">Últimos registros</h2>
+        <button class="ghost-btn" id="refreshBtn" type="button" data-i18n="refreshNow">Actualizar ahora</button>
+      </div>
+      <div class="table-scroll">
+        <table id="recentTable">
+          <thead>
+            <tr>
+              <th data-i18n="colDate">Fecha</th>
+              <th data-i18n="colValue">Reservas (millones de USD)</th>
+              <th data-i18n="colChange">Variación diaria</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <span data-i18n="source">Fuente oficial:</span>
+      <a href="https://api.bcra.gob.ar/estadisticas/v4.0/monetarias/1" target="_blank" rel="noopener noreferrer">API BCRA v4.0 · Estadísticas Monetarias</a>
+      · <a href="https://www.bcra.gob.ar/" target="_blank" rel="noopener noreferrer">bcra.gob.ar</a>
+    </p>
+    <p class="muted small" data-i18n="disclaimer">Sitio informativo no oficial. Los valores se obtienen directamente del servicio de datos abiertos del BCRA y pueden tener demoras o cambios sin aviso.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
