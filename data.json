@@ -2,7 +2,7 @@
   "status": 200,
   "metadata": {
     "resultset": {
-      "count": 7604,
+      "count": 7605,
       "offset": 0,
       "limit": 30
     }
@@ -11,6 +11,10 @@
     {
       "idVariable": 1,
       "detalle": [
+        {
+          "fecha": "2026-11-25",
+          "valor": 48748.0
+        },
         {
           "fecha": "2026-11-24",
           "valor": 48819.0
@@ -126,14 +130,10 @@
         {
           "fecha": "2026-10-08",
           "valor": 49323.0
-        },
-        {
-          "fecha": "2026-10-07",
-          "valor": 49133.0
         }
       ]
     }
   ],
-  "generatedAt": "2026-11-27T20:09:05+00:00",
+  "generatedAt": "2026-11-28T03:26:27+00:00",
   "source": "https://api.bcra.gob.ar/estadisticas/v4.0/monetarias/1?limit=30"
 }
